@@ -16,27 +16,35 @@ public class Solver {
     }
     
 
-    public int fitness (Maze m1, myNode n1){
-        int row = n1.getState()[0][0];
-        int col = n1.getState()[0][1];
-        if(m1.getGrid()[row][col]== 0){
-            return 0;
+    public int fitness (int[] path,Maze m1, myNode n1){
+        int[] loc = m1.getStart();
+        ArrayList<moveNode> moves = new ArrayList<moveNode>();
+        moveNode currentMove = new moveNode(loc, moves);
+        for(int i:path){
+            if(i==0){
+
+            }
+            else if(i==1){
+
+            }
+            else if(i==2){
+
+            }
+            else{
+
+            }
         }
-        else if(m1.getGrid()[row][col]== 1 && n1.getState() == m1.getGoal()){ //double-check comparison here
-            return Integer.MAX_VALUE;
-        }
-        else{
-            return proximity(m1, n1);
-        }
+        
     }
 
     public myNode mutate(myNode n1){
 
-    }
 
+    }
+//Crossover
     public myNode reproduce(myNode p1, myNode p2){
         int n  = p1.getNumMoves();
-        int c = r.nextInt(4);
+        int c = r.nextInt(n);
         myNode p0 = new myNode
 
     }
