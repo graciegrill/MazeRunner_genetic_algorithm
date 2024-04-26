@@ -2,8 +2,27 @@ public class Maze{
 
     private int xDim;
     private int yDim;
-    private int[]    goal;
+    private int[] goal;
     private int[][] grid;
+
+    public Maze(int xDim, int yDim, int[] goal, int[][] grid, int[] start) {
+        this.xDim = xDim;
+        this.yDim = yDim;
+        this.goal = goal;
+        this.grid = grid;
+        this.start = start;
+    }
+
+    public int[] getGoal() {
+        return this.goal;
+    }
+
+    public void setGoal(int[] goal) {
+        this.goal = goal;
+    }
+
+    
+    
     private int[] start;
 
     public int[] getStart() {
@@ -40,19 +59,7 @@ public class Maze{
         this.yDim = yDim;
     }
 
-    public Maze(int xDim, int yDim, int[][] goal) {
-        this.xDim = xDim;
-        this.yDim = yDim;
-        this.goal = goal;
-        this.grid = new int[yDim][xDim];
-    }
-
+    
    
-    public int[][] getGoal() {
-        return this.goal;
-    }
-
-    public void setGoal(int[][] goal) {
-        this.goal = goal;
-    }
+    
 }

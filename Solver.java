@@ -3,54 +3,108 @@ import java.util.ArrayList;
 import java.util.Random;
 public class Solver {
 
-    private Random r = new Random();
-
-    public int proximity(Maze m1, myNode n1){
-        int row0 = n1.getState()[0][0];
-        int col0 = n1.getState()[0][1];
-        int row1 = m1.getGoal()[0][0];
-        int col1 = m1.getGoal()[0][1];
-        int rowDistance = Math.abs(row1 - row0);
-        int colDistance = Math.abs(col1 - col0);
-        return rowDistance+colDistance;
-    }
-    
-
-    public int fitness (int[] path,Maze m1, myNode n1){
+    public int fitness (int[] path,Maze m1, myNode n1){ //ADD consideration for visited locations
         int[] loc = m1.getStart();
-        ArrayList<moveNode> moves = new ArrayList<moveNode>();
+        ArrayList<moveNode> moves = new ArrayList<moveNode>();//change this to locations
         moveNode currentMove = new moveNode(loc, moves);
+        int total = 0;
         for(int i:path){
             if(i==0){
-
+                int x = currentMove.getLoc()[0];
+                int y = currentMove.getLoc()[1] + 1;
+                int[] loc1 = {x, y};
+                currentMove.setLoc(loc1);
+                if (m1.getGrid()[currentMove.getLoc()[0]][currentMove.getLoc()[1]] == 1){
+                    total++;
+                }
+                else if(currentMove.getLoc() == m1.getGoal()){
+                    total = Integer.MAX_VALUE;
+                }
+                else if(m1.getGrid()[currentMove.getLoc()[0]][currentMove.getLoc()[1]] == 0){
+                    total--;
+                }
             }
             else if(i==1){
+                int x = currentMove.getLoc()[0]+1;
+                int y = currentMove.getLoc()[1];
+                int[] loc1 = {x, y};
+                currentMove.setLoc(loc1);
+                if (m1.getGrid()[currentMove.getLoc()[0]][currentMove.getLoc()[1]] == 1){
+                    total++;
+                }
+                else if(currentMove.getLoc() == m1.getGoal()){
+                    total = Integer.MAX_VALUE;
+                }
+                else if(m1.getGrid()[currentMove.getLoc()[0]][currentMove.getLoc()[1]] == 0){
+                    total--;
+                }
 
             }
             else if(i==2){
+                int x = currentMove.getLoc()[0];
+                int y = currentMove.getLoc()[1]-1;
+                int[] loc1 = {x, y};
+                currentMove.setLoc(loc1);
+                if (m1.getGrid()[currentMove.getLoc()[0]][currentMove.getLoc()[1]] == 1){
+                    total++;
+                }
+                else if(currentMove.getLoc() == m1.getGoal()){
+                    total = Integer.MAX_VALUE;
+                }
+                else if(m1.getGrid()[currentMove.getLoc()[0]][currentMove.getLoc()[1]] == 0){
+                    total--;
+                }
 
             }
             else{
-
+                int x = currentMove.getLoc()[0]-1;
+                int y = currentMove.getLoc()[1];
+                int[] loc1 = {x, y};
+                currentMove.setLoc(loc1);
+                if (m1.getGrid()[currentMove.getLoc()[0]][currentMove.getLoc()[1]] == 1){
+                    total++;
+                }
+                if(currentMove.getLoc() == m1.getGoal()){
+                    total = Integer.MAX_VALUE;
+                }
+                if(m1.getGrid()[currentMove.getLoc()[0]][currentMove.getLoc()[1]] == 0){
+                    total--;
+                }
             }
         }
+        return total;
         
     }
 
-    public myNode mutate(myNode n1){
-
-
+    public static void mutate(int[] path){
+        Random r = new Random();
+        int rand = r.nextInt(100);
+        int loc = r.nextInt(path.length);
+        int choice = r.nextInt(4);
+        if (rand<80){//CHANGE THIS BACK GRACE
+            path[loc] = choice;
+        }
+        for (int i = 0; i<path.length; i++){
+            System.out.println(path[i]);
+        }
     }
 //Crossover
-    public myNode reproduce(myNode p1, myNode p2){
-        int n  = p1.getNumMoves();
-        int c = r.nextInt(n);
-        myNode p0 = new myNode
-
+    public static void reproduce(int[] path1, int[] path2){
+        ArrayList<Integer> newList = new ArrayList<Integer>();
+        Random rand = new Random();
+        int n = path1.length;
+        int c = rand.nextInt(n);
+        for(int i = 0; i<c+1; i++){
+            newList.add(path1[i]);
+        }
+        for(int i = c+1; i<n;i++){
+            newList.add(path2[i]);
+        }
+        System.out.println(newList);
     }
 
 
-    public ArrayList<myNode> geneticAlgorithm(int pop, int fitness){
+    /* public ArrayList<myNode> geneticAlgorithm(int pop, int fitness){
         while(fitness!=Integer.MAX_VALUE){
             ArrayList<Integer> weights = weightedby (pop, fitness);
             ArrayList<myNode> pop2 = new ArrayList<myNode>();
@@ -67,6 +121,14 @@ public class Solver {
         }
         return best in pop;
 
+    } */
+
+    public static void main(String[] args){
+        int[] path1 = {1,2,3,4,5,6,7,8};
+        int[] path2 = {11,12,13,14,15,16,17,18};
+        mutate(path1);
     }
     
+    
 }
+
