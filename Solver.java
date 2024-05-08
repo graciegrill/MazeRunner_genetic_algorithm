@@ -1,74 +1,107 @@
 import java.util.ArrayList;
 //import java.util.List;
 import java.util.Random;
+import java.util.Collections;
+import java.util.Comparator;
 public class Solver {
 
-    public int fitness (int[] path,Maze m1, myNode n1){ //ADD consideration for visited locations
+    public int fitness (ArrayList<Integer> path,Maze m1){ //ADD consideration for visited locations
         int[] loc = m1.getStart();
-        ArrayList<moveNode> moves = new ArrayList<moveNode>();//change this to locations
-        moveNode currentMove = new moveNode(loc, moves);
+        ArrayList<int[]> moves = new ArrayList<int[]>();//change this to locations
+        moves.add(loc);
+        moveNode currentMove = new moveNode(loc);
         int total = 0;
         for(int i:path){
             if(i==0){
                 int x = currentMove.getLoc()[0];
                 int y = currentMove.getLoc()[1] + 1;
                 int[] loc1 = {x, y};
+                moves.add(loc1);
                 currentMove.setLoc(loc1);
                 if (m1.getGrid()[currentMove.getLoc()[0]][currentMove.getLoc()[1]] == 1){
                     total++;
+                    continue;
                 }
-                else if(currentMove.getLoc() == m1.getGoal()){
+                if(currentMove.getLoc() == m1.getGoal()){
                     total = Integer.MAX_VALUE;
+                    break;
                 }
-                else if(m1.getGrid()[currentMove.getLoc()[0]][currentMove.getLoc()[1]] == 0){
+                if(m1.getGrid()[currentMove.getLoc()[0]][currentMove.getLoc()[1]] == 0){
                     total--;
+                    continue;
+                }
+                if(moves.contains(currentMove.getLoc())){
+                    total = Integer.MIN_VALUE;
+                    break;
                 }
             }
             else if(i==1){
                 int x = currentMove.getLoc()[0]+1;
                 int y = currentMove.getLoc()[1];
                 int[] loc1 = {x, y};
+                moves.add(loc1);
                 currentMove.setLoc(loc1);
                 if (m1.getGrid()[currentMove.getLoc()[0]][currentMove.getLoc()[1]] == 1){
                     total++;
+                    continue;
                 }
-                else if(currentMove.getLoc() == m1.getGoal()){
+                if(currentMove.getLoc() == m1.getGoal()){
                     total = Integer.MAX_VALUE;
+                    break;
                 }
-                else if(m1.getGrid()[currentMove.getLoc()[0]][currentMove.getLoc()[1]] == 0){
+                if(m1.getGrid()[currentMove.getLoc()[0]][currentMove.getLoc()[1]] == 0){
                     total--;
+                    continue;
                 }
-
+                if(moves.contains(currentMove.getLoc())){
+                    total = Integer.MIN_VALUE;
+                    break;
+                }
             }
             else if(i==2){
                 int x = currentMove.getLoc()[0];
                 int y = currentMove.getLoc()[1]-1;
                 int[] loc1 = {x, y};
+                moves.add(loc1);
                 currentMove.setLoc(loc1);
                 if (m1.getGrid()[currentMove.getLoc()[0]][currentMove.getLoc()[1]] == 1){
                     total++;
+                    continue;
                 }
-                else if(currentMove.getLoc() == m1.getGoal()){
+                if(currentMove.getLoc() == m1.getGoal()){
                     total = Integer.MAX_VALUE;
+                    break;
                 }
-                else if(m1.getGrid()[currentMove.getLoc()[0]][currentMove.getLoc()[1]] == 0){
+                if(m1.getGrid()[currentMove.getLoc()[0]][currentMove.getLoc()[1]] == 0){
                     total--;
+                    continue;
                 }
-
+                if(moves.contains(currentMove.getLoc())){
+                    total = Integer.MIN_VALUE;
+                    break;
+                }
             }
             else{
                 int x = currentMove.getLoc()[0]-1;
                 int y = currentMove.getLoc()[1];
                 int[] loc1 = {x, y};
+                moves.add(loc1);
                 currentMove.setLoc(loc1);
                 if (m1.getGrid()[currentMove.getLoc()[0]][currentMove.getLoc()[1]] == 1){
                     total++;
+                    continue;
                 }
                 if(currentMove.getLoc() == m1.getGoal()){
                     total = Integer.MAX_VALUE;
+                    break;
                 }
                 if(m1.getGrid()[currentMove.getLoc()[0]][currentMove.getLoc()[1]] == 0){
                     total--;
+                    continue;
+                }
+                if(moves.contains(currentMove.getLoc())){
+                    total = Integer.MIN_VALUE;
+                    break;
                 }
             }
         }
@@ -103,12 +136,31 @@ public class Solver {
         System.out.println(newList);
     }
 
+    public ArrayList<ArrayList<Integer>> generatePopulation(Maze m1){
+        Random r = new Random();
+        ArrayList<ArrayList<Integer>> paths = new ArrayList<ArrayList<Integer>>();
+        for (int i = 0; i<10;i++){
+        ArrayList<Integer> newPath = new ArrayList<Integer>();
+            for (int j = 0; j<m1.getSize(); j++){
+                newPath.add(r.nextInt(4));
+        }
+        paths.add(newPath);
+    }
+        return paths;
+    }
 
-    /* public ArrayList<myNode> geneticAlgorithm(int pop, int fitness){
-        while(fitness!=Integer.MAX_VALUE){
-            ArrayList<Integer> weights = weightedby (pop, fitness);
+
+    public ArrayList<myNode> geneticAlgorithm(ArrayList<ArrayList<Integer>> pop, Maze m1){
+        int fit = 0;
+        ArrayList<ArrayList<Integer>> p = new ArrayList<ArrayList<Integer>>();
+        while(fit!=Integer.MAX_VALUE){
+            for (ArrayList<Integer> ls : pop){
+                int newFit = fitness(ls, m1);
+                if(newFit>fit){
+                    fit = newFit;
+                }
+            }
             ArrayList<myNode> pop2 = new ArrayList<myNode>();
-
             for (int i=1; i<pop; i++){
                 parent1, parent2 = weightedRandomChoices(pop, weights,2);
                 child = reproduce(parent1, parent2);
@@ -121,8 +173,7 @@ public class Solver {
         }
         return best in pop;
 
-    } */
-
+    } 
     public static void main(String[] args){
         int[] path1 = {1,2,3,4,5,6,7,8};
         int[] path2 = {11,12,13,14,15,16,17,18};

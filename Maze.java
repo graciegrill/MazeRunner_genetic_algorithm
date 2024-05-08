@@ -4,13 +4,23 @@ public class Maze{
     private int yDim;
     private int[] goal;
     private int[][] grid;
+    private int size;
 
-    public Maze(int xDim, int yDim, int[] goal, int[][] grid, int[] start) {
-        this.xDim = xDim;
-        this.yDim = yDim;
+    public int getSize() {
+        return this.size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public Maze(int[] goal, int[][] grid, int[] start) {
+        this.xDim = grid[0].length;
+        this.yDim = grid.length;
         this.goal = goal;
         this.grid = grid;
         this.start = start;
+        this.size = this.xDim*this.yDim;
     }
 
     public int[] getGoal() {
