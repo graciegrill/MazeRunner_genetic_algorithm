@@ -150,25 +150,29 @@ public class Solver {
     }
 
 
-    public ArrayList<myNode> geneticAlgorithm(ArrayList<ArrayList<Integer>> pop, Maze m1){
+    public ArrayList<myNode> geneticAlgorithm(ArrayList<myNode> pop, Maze m1){
         int fit = 0;
         ArrayList<ArrayList<Integer>> p = new ArrayList<ArrayList<Integer>>();
         while(fit!=Integer.MAX_VALUE){
-            for (ArrayList<Integer> ls : pop){
+            for (myNode ls : pop){
                 int newFit = fitness(ls, m1);
                 if(newFit>fit){
                     fit = newFit;
                 }
             }
             ArrayList<myNode> pop2 = new ArrayList<myNode>();
-            for (int i=1; i<pop; i++){
-                parent1, parent2 = weightedRandomChoices(pop, weights,2);
-                child = reproduce(parent1, parent2);
-                if(small random prob){
+            for (int i=1; i<pop.size(); i++){
+                Random r = new Random();
+                myNode parent1 = new myNode();
+                myNode parent2 = new myNode();
+                parent1 = pop.get((r.nextInt(pop.size())));
+                parent2 = pop.get((r.nextInt(pop.size())));
+                myNode child = reproduce(parent1, parent2);
+                if(small random prob){//need to do this still.
                     child = mutate(child);
                     pop2.add(child);
                 }
-                pop = pop2;
+                pop = pop2; 
             }
         }
         return best in pop;

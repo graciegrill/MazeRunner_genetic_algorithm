@@ -4,6 +4,9 @@ public class myNode {
     private int[][] state; //whether the runner is at a 0 or a 1 (wall or path)
     private int numMoves;
 
+    public myNode() {
+    }
+
     public myNode(myNode parent, int[][] state, int numMoves) {
         this.parent = parent;
         this.state = state;
