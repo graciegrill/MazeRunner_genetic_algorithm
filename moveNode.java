@@ -3,15 +3,20 @@ import java.util.Objects;
 public class moveNode {
 
     private int[] loc;
-    private int[] preMoves;
+    private ArrayList<Integer> preMoves;
+
+    public moveNode(int[] loc, ArrayList<Integer> preMoves) {
+        this.loc = loc;
+        this.preMoves = preMoves;
+    }
 
     public moveNode() {
     }
-    public int[] getPreMoves() {
+    public ArrayList<Integer> getPreMoves() {
         return this.preMoves;
     }
 
-    public void setPreMoves(int[] preMoves) {
+    public void setPreMoves(ArrayList<Integer> preMoves) {
         this.preMoves = preMoves;
     }
 
