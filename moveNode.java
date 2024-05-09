@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 public class moveNode {
 
-    private int[] loc;
-    private ArrayList<Integer> preMoves;
+    private int[] loc;//current location
+    private ArrayList<Integer> preMoves;//path of moves
 
     public moveNode(int[] loc, ArrayList<Integer> preMoves) {
         this.loc = loc;

@@ -1,10 +1,10 @@
 public class Maze{
 
-    private int xDim;
-    private int yDim;
-    private int[] goal;
-    private int[][] grid;
-    private int size;
+    private int xDim;//X dimension of the maze
+    private int yDim;//Y dimension of the maze
+    private int[] goal;//goal location
+    private int[][] grid;//grid representing the maze. Made of 0s(impassable) and 1s(passable)
+    private int size;//size of the maze
 
     public int getSize() {
         return this.size;
@@ -68,8 +68,7 @@ public class Maze{
     public void setYDim(int yDim) {
         this.yDim = yDim;
     }
-
+}
     
    
     
-}
