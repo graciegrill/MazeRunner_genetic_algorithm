@@ -1,0 +1,1 @@
+This project utilizes a genetic algorithm to solve mazes by generating random move sequences and combining them over several generations to produce a path through the maze. It is written in Java. See writeup.docx for more information and analysis of the problem and quality of the solution.
